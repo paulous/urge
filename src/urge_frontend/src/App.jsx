@@ -1,31 +1,37 @@
-import { useState } from 'react';
-import { urge_backend } from 'declarations/urge_backend';
+//import { urge_backend } from "../../declarations/urge_backend"
+import {useState} from "react";
+import {
+	AgentProvider,
+	ActorProvider,
+	CandidAdapterProvider,
+	useAuthState
+} from "@ic-reactor/react";
+import { NoteActorProvider } from "./actorNote"
+import Login from "./components/Login"
+import Notes from "./components/Notes"
 
 function App() {
-  const [greeting, setGreeting] = useState('');
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    urge_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
-  }
 
-  return (
-    <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
-    </main>
-  );
+	return (
+		<AgentProvider withLocalEnv>
+			<CandidAdapterProvider>
+				{/* <ActorProvider
+					withDevtools
+					canisterId="ryjl3-tyaaa-aaaaa-aaaba-cai"
+					loadingComponent={<div>Loading Icp Ledger...</div>}
+					></ActorProvider> */}
+				<NoteActorProvider
+					canisterId="bd3sg-teaaa-aaaaa-qaaba-cai"
+					loadingComponent={<div>Loading Note Actor...</div>}
+					//withVisitor={true}
+				>
+					<Notes />
+					<Login />
+				</NoteActorProvider>
+			</CandidAdapterProvider>
+		</AgentProvider>
+	);
 }
 
 export default App;

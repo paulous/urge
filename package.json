@@ -14,5 +14,8 @@
   "type": "module",
   "workspaces": [
     "src/urge_frontend"
-  ]
+  ],
+  "dependencies": {
+    "@ic-reactor/react": "^1.8.2"
+  }
 }
